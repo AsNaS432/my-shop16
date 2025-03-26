@@ -1,0 +1,275 @@
+{
+    "products": [
+    {
+    "id": 1,
+    "title": "Ноутбук ASUS VivoBook S 15",
+    "price": 45000,
+    "description": "15.6 дюймов, Intel Core i5, 8 ГБ ОЗУ, 512 ГБ SSD",
+    "image": "https://avatars.mds.yandex.net/get-yabs_performance/14746398/hat08f83b2fe37fa94e80e0d7457b3ffe8e/hugeXX",
+    "category": "electronics",
+    "rating": 4.7
+    },
+    {
+    "id": 2,
+    "title": "Смартфон Samsung Galaxy S24",
+    "price": 60000,
+    "description": "6.2 дюймов, 128 ГБ, Phantom Gray",
+    "image": "https://cdn1.ozone.ru/s3/multimedia-1/c600/6902796889.jpg",
+    "category": "electronics",
+    "rating": 4.8
+    },
+    {
+    "id": 3,
+    "title": "Наушники Apple AirPods Max",
+    "price": 25000,
+    "description": "Беспроводные, шумоподавление, голубые",
+    "image": "https://cdn1.ozone.ru/s3/multimedia-1/6429578641.jpg",
+    "category": "electronics",
+    "rating": 4.9
+    },
+    {
+    "id": 4,
+    "title": "Фитнес-браслет Xiaomi Mi Band 6",
+    "price": 3000,
+    "description": "Цветной AMOLED-экран, черный",
+    "image": "https://avatars.mds.yandex.net/i?id=d0801cece724a16b439556bd7712757c_sr-10111702-images-thumbs&n=13",
+    "category": "electronics",
+    "rating": 4.6
+    },
+    {
+    "id": 5,
+    "title": "Планшет Apple iPad Air",
+    "price": 55000,
+    "description": "10.9 дюймов, 64 ГБ, Space Gray",
+    "image": "https://cdn1.ozone.ru/s3/multimedia-v/6460908175.jpg",
+    "category": "electronics",
+    "rating": 4.8
+    },
+    {
+    "id": 6,
+    "title": "Фотоаппарат Canon EOS R6",
+    "price": 150000,
+    "description": "Зеркальный, 20 Мп, 4K видео",
+    "image": "https://avatars.mds.yandex.net/get-mpic/4342845/img_id1720051664548390269.jpeg/orig",
+    "category": "electronics",
+    "rating": 4.9
+    },
+    {
+    "id": 7,
+    "title": "Монитор LG 27gn800",
+    "price": 40000,
+    "description": "27 дюймов, 4K, IPS",
+    "image": "https://avatars.mds.yandex.net/i?id=f0c94c7674665ae8e24458b65bdce65c_l-5210621-images-thumbs&n=13",
+    "category": "electronics",
+    "rating": 4.7
+    },
+    {
+    "id": 8,
+    "title": "Игровая мышь Logitech G502",
+    "price": 5000,
+    "description": "11 программируемых кнопок, RGB",
+    "image": "https://cdn1.ozone.ru/s3/multimedia-h/6272230145.jpg",
+    "category": "electronics",
+    "rating": 4.8
+    },
+    {
+    "id": 9,
+    "title": "Клавиатура Keychron K6Pro ",
+    "price": 7000,
+    "description": "Механическая, Bluetooth, 65%",
+    "image": "https://avatars.mds.yandex.net/get-mpic/4420180/img_id4786061648632901228.jpeg/orig",
+    "category": "electronics",
+    "rating": 4.7
+    },
+    {
+    "id": 10,
+    "title": "Колонка JBL PARTYBOX 310",
+    "price": 8000,
+    "description": "Портативная, водонепроницаемая, синий",
+    "image": "https://images.tomas.by/i3/firms/49/5382/5382933/pic_e293fab1660d164_1024x3000.webp.jpg",
+    "category": "electronics",
+    "rating": 4.6
+    },
+    {
+    "id": 11,
+    "title": "Футболка мужская",
+    "price": 1500,
+    "description": "Хлопок, черный",
+    "image": "https://supermagnit.net/wa-data/public/shop/products/58/28/2858/images/11875/11875.750x0.JPG",
+    "category": "clothing",
+    "rating": 4.5
+    },
+    {
+    "id": 12,
+    "title": "Джинсы женские",
+    "price": 3000,
+    "description": "Скинни, синий",
+    "image": "https://img.ltwebstatic.com/images2_pi/2019/07/22/15637822782308968541_thumbnail_600x799.webp",
+    "category": "clothing",
+    "rating": 4.6
+    },
+    {
+    "id": 13,
+    "title": "Куртка зимняя",
+    "price": 10000,
+    "description": "Пуховая, черный",
+    "image": "https://avatars.mds.yandex.net/get-yabs_performance/14172617/hat004793cc5e3543e9f9859f54b5d8b484/hugeX",
+    "category": "clothing",
+    "rating": 4.7
+    },
+    {
+    "id": 14,
+    "title": "Кроссовки Nike Air Jordan 1",
+    "price": 8000,
+    "description": "Беговые, белый",
+    "image": "https://cdn1.ozone.ru/s3/multimedia-1-l/7057228737.jpg",
+    "category": "clothing",
+    "rating": 4.8
+    },
+    {
+    "id": 15,
+    "title": "Рюкзак Vans",
+    "price": 5000,
+    "description": "Повседневный, черный",
+    "image": "https://robinzon.ru/upload/resize_cache/iblock/d22/567_567_1/d228daa3913a0f5c5aa7bdd75cd6f3db.jpg",
+    "category": "clothing",
+    "rating": 4.6
+    },
+    {
+    "id": 16,
+    "title": "Часы Casio G-Shock",
+    "price": 12000,
+    "description": "Ударопрочные, черный",
+    "image": "https://avatars.mds.yandex.net/get-mpic/4907979/img_id6091682962564214430.jpeg/orig",
+    "category": "clothing",
+    "rating": 4.7
+    },
+    {
+    "id": 17,
+    "title": "Очки Louis Vuitton",
+    "price": 9000,
+    "description": "Солнцезащитные, черный",
+    "image": "https://cdn1.ozone.ru/s3/multimedia-c/c600/6578825736.jpg",
+    "category": "clothing",
+    "rating": 4.8
+    },
+    {
+    "id": 18,
+    "title": "Кепка бейсболка",
+    "price": 1000,
+    "description": "Шерсть, черный",
+    "image": "https://avatars.mds.yandex.net/get-mpic/5242361/img_id2239136100666013638.jpeg/orig",
+    "category": "clothing",
+    "rating": 4.5
+    },
+    {
+    "id": 19,
+    "title": "Платье вечернее",
+    "price": 7000,
+    "description": "Шелк, черный",
+    "image": "https://a.lmcdn.ru/product/M/P/MP002XW0LYXF_18547578_1_v1.jpeg",
+    "category": "clothing",
+    "rating": 4.7
+    },
+    {
+    "id": 20,
+    "title": "Сумка женская",
+    "price": 6000,
+    "description": "Кожа, бежевый",
+    "image": "https://main-cdn.sbermegamarket.ru/big1/hlr-system/1540686/100023329022b0.jpg",
+    "category": "clothing",
+    "rating": 4.6
+    },
+    {
+    "id": 21,
+    "title": "Книга 'Зеленая миля'",
+    "price": 500,
+    "description": "Стивен Кинг",
+    "image": "https://cdn1.ozone.ru/s3/multimedia-1-o/6934842528.jpg",
+    "category": "books",
+    "rating": 4.9
+    },
+    {
+    "id": 22,
+    "title": "Книга 'Мастер и Маргарита'",
+    "price": 600,
+    "description": "Михаил Булгаков",
+    "image": "https://cdn1.ozone.ru/s3/multimedia-1-2/7048579142.jpg",
+    "category": "books",
+    "rating": 4.8
+    },
+    {
+    "id": 23,
+    "title": "Книга 'Незнакомка из Уайлдфелл-Холла'",
+    "price": 300,
+    "description": "Энн Бронте",
+    "image": "https://cdn1.ozone.ru/s3/multimedia-1-x/7089120069.jpg",
+    "category": "books",
+    "rating": 4.9
+    },
+    {
+    "id": 24,
+    "title": "Книга 'Ганнибал'",
+    "price": 800,
+    "description": "Томас Харрис",
+    "image": "https://cdn1.ozone.ru/s3/multimedia-b/6436206611.jpg",
+    "category": "books",
+    "rating": 4.7
+    },
+    {
+    "id": 25,
+    "title": "Книга 'Черный кофе'",
+    "price": 550,
+    "description": "Агата Кристи",
+    "image": "https://avatars.mds.yandex.net/get-mpic/6214739/img_id1449392299649162864.jpeg/orig",
+    "category": "books",
+    "rating": 4.8
+    },
+    {
+    "id": 26,
+    "title": "Книга 'Джейн Эйр'",
+    "price": 400,
+    "description": "Шарлотта Бронте",
+    "image": "https://cdn1.ozone.ru/s3/multimedia-0/c600/6741154188.jpg",
+    "category": "books",
+    "rating": 4.9
+    },
+    {
+    "id": 27,
+    "title": "Книга 'ДРУЗЬЯ, ЛЮБИМЫЕ И ОДНА БОЛЬШАЯ УЖАСНАЯ ВЕЩЬ. Автобиография Мэттью Перри'",
+    "price": 650,
+    "description": "Мэттью Перри",
+    "image": "https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_653e36b8e76c281c89ba5d10_653e3734dac9ac7c23579b1f/scale_1200",
+    "category": "books",
+    "rating": 4.7
+    },
+    {
+    "id": 28,
+    "title": "Книга 'Три товарища'",
+    "price": 750,
+    "description": "Эрих Мария Ремарк",
+    "image": "https://avatars.mds.yandex.net/get-mpic/11397617/2a0000018f57417d83ff46a5587830d930c0/orig",
+    "category": "books",
+    "rating": 4.8
+    },
+    {
+    "id": 29,
+    "title": "Книга 'Скрытые намерения'",
+    "price": 600,
+    "description": "Майк Омер",
+    "image": "https://avatars.mds.yandex.net/i?id=edf8eb1c429d7321063be462203c651c_l-12463602-images-thumbs&n=13",
+    "category": "books",
+    "rating": 4.7
+    },
+    {
+    "id": 30,
+    "title": "Книга 'Шантарам'",
+    "price": 850,
+    "description": "Грегори Дэвид Робертс",
+    "image": "https://mirknig.eu/image/cache/AzbukaAttikus/shantaram-1200x630.jpg",
+    "category": "books",
+    "rating": 4.8
+    }
+    ]
+   }
+   
