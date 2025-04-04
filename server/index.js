@@ -1,0 +1,204 @@
+const path = require('path');
+const envPath = path.join(__dirname, '..', '.env');
+console.log('Loading .env from:', envPath);
+require('dotenv').config({ path: envPath });
+const express = require('express');
+const cors = require('cors');
+const { Pool } = require('pg');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const axios = require('axios');
+const { v4: uuidv4 } = require('uuid');
+
+const app = express();
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+app.use(express.json());
+
+// PostgreSQL connection
+const pool = new Pool({
+  user: process.env.DB_USER || 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  database: process.env.DB_NAME || 'myshop',
+  password: process.env.DB_PASSWORD || '12345',
+  port: process.env.DB_PORT || 5433,
+});
+
+pool.on('error', (err) => {
+  console.error('Unexpected database error:', err);
+});
+
+// Create users table if not exists
+async function initDB() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    console.log('Database initialized');
+  } catch (err) {
+    console.error('Database initialization error:', err);
+  }
+}
+
+// Auth endpoints
+app.post('/auth/register', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const result = await pool.query(
+      'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, email',
+      [email, hashedPassword]
+    );
+    
+    const token = jwt.sign(
+      { userId: result.rows[0].id },
+      process.env.JWT_SECRET || require('crypto').randomBytes(32).toString('hex'),
+      { expiresIn: '1h' }
+    );
+    
+    res.json({ user: result.rows[0], token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Registration failed' });
+  }
+});
+
+app.post('/auth/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    const validPassword = await bcrypt.compare(password, result.rows[0].password);
+    if (!validPassword) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    const token = jwt.sign(
+      { userId: result.rows[0].id },
+      process.env.JWT_SECRET || require('crypto').randomBytes(32).toString('hex'),
+      { expiresIn: '1h' }
+    );
+    
+    res.json({ 
+      user: { id: result.rows[0].id, email: result.rows[0].email },
+      token 
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Login failed' });
+  }
+});
+
+// Ollama Status Check Endpoint
+app.get('/api/ai/status', async (req, res) => {
+  try {
+    const response = await axios.get(`${process.env.OLLAMA_HOST || 'http://localhost:11434'}`, {
+      timeout: 2000,
+      headers: { 'Content-Type': 'application/json' }
+    });
+    res.json({ 
+      status: 'online',
+      version: response.data?.version || 'unknown'
+    });
+  } catch (error) {
+    res.status(503).json({ 
+      status: 'offline',
+      error: 'Ollama service is not running',
+      details: error.message
+    });
+  }
+});
+
+// AI Chat Endpoint (Ollama)
+app.post('/api/ai/chat', async (req, res) => {
+  try {
+    const { message, conversation = [] } = req.body;
+    const model = process.env.OLLAMA_MODEL || 'llama2';
+    
+    // Check Ollama availability first
+    try {
+      await axios.get(`${process.env.OLLAMA_HOST || 'http://localhost:11434'}`, {
+        timeout: 1000
+      });
+    } catch (error) {
+      return res.status(503).json({
+        error: 'Ollama service unavailable',
+        solution: 'Please ensure Ollama is running with `ollama serve`'
+      });
+    }
+
+    // Format messages in new chat format
+    const messages = [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      ...conversation.slice(-6).map(msg => ({
+        role: msg.sender === 'user' ? 'user' : 'assistant',
+        content: msg.text
+      })),
+      { role: 'user', content: message }
+    ];
+
+    // Make the chat request
+    const response = await axios.post(
+      `${process.env.OLLAMA_HOST || 'http://localhost:11434'}/api/chat`,
+      {
+        model,
+        messages,
+        stream: false,
+        options: { temperature: 0.7 }
+      },
+      { 
+        timeout: 15000,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+
+    if (!response.data?.message?.content) {
+      throw new Error('Invalid response format from Ollama');
+    }
+
+    return res.json({
+      reply: response.data.message.content
+    });
+  } catch (error) {
+    console.error('AI Service Error:', {
+      message: error.message,
+      stack: error.stack,
+      response: error.response?.data
+    });
+    
+    return res.status(500).json({ 
+      error: 'AI service error',
+      details: error.response?.data || error.message 
+    });
+  }
+});
+
+// Initialize DB and start server
+initDB().then(() => {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Ollama configured to: ${process.env.OLLAMA_HOST || 'http://localhost:11434'}`);
+    console.log(`Using model: ${process.env.OLLAMA_MODEL || 'llama2'}`);
+  });
+});
