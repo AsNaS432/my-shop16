@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../features/cartSlice';
 
+const formatPrice = (price) => {
+  return price.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+};
+
 const ProductCard = ({ product }) => {
  const dispatch = useDispatch();
  return (
@@ -22,7 +26,7 @@ const ProductCard = ({ product }) => {
  <CardContent>
  <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>{product.title}</Typography>
  <Typography variant="body2" sx={{ color: '#666' }}>{product.description}</Typography>
- <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#000' }}>{product.price}₽</Typography>
+ <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#000' }}>{formatPrice(product.price)}</Typography>
  <Button
  variant="contained"
  sx={{ backgroundColor: '#ff5722', color: '#ffffff' }}

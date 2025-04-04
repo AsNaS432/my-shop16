@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import { 
   Button, 
   Typography, 
-  Box, 
   List, 
   ListItem, 
   ListItemText,
-  Stack 
+  Stack, 
+  Paper 
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCart } from '../features/cartSlice';
+import { clearCart, removeFromCart } from '../features/cartSlice';
 import OrderDialog from './OrderDialog'; 
+
+const formatPrice = (price) => {
+  return price.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+};
 
 const Cart = () => {
   const cartItems = useSelector(state => state.cart.items);
@@ -20,7 +24,7 @@ const Cart = () => {
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Paper elevation={3} sx={{ p: 4, borderRadius: 2, backgroundColor: '#f9f9f9', maxWidth: '900px', margin: 'auto' }}>
       <Typography variant="h6" gutterBottom>
         Корзина
       </Typography>
@@ -28,19 +32,25 @@ const Cart = () => {
         <Typography>Корзина пуста</Typography>
       ) : (
         <>
-          <List>
+          <List sx={{ padding: 0 }}>
             {cartItems.map((item) => (
-              <ListItem key={item.id}>
+              <ListItem key={item.id} sx={{ borderBottom: '1px solid #ddd', padding: '10px 0' }}>
                 <ListItemText
                   primary={item.title}
-                  secondary={`${item.quantity} × ${item.price} ₽`}
+                  secondary={`${item.quantity} × ${formatPrice(item.price)}`}
                 />
-                <Typography>{item.price * item.quantity} ₽</Typography>
+                <Button 
+                  variant="outlined" 
+                  color="error"
+                  onClick={() => dispatch(removeFromCart(item))}
+                >
+                  Удалить
+                </Button>
               </ListItem>
             ))}
           </List>
           <Typography variant="h6" sx={{ mt: 2 }}>
-            Итого: {total} ₽
+            Итого: {formatPrice(total)}
           </Typography>
           <Stack spacing={2} sx={{ mt: 2 }}>
             <Button 
@@ -55,7 +65,7 @@ const Cart = () => {
               color="error"
               onClick={() => dispatch(clearCart())}
             >
-              Очистить корзину
+              Очистить всю корзину
             </Button>
           </Stack>
           <OrderDialog 
@@ -65,7 +75,7 @@ const Cart = () => {
           />
         </>
       )}
-    </Box>
+    </Paper>
   );
 };
 
