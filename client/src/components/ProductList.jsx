@@ -17,7 +17,7 @@ const ProductList = () => {
  console.log('Current Category:', category);
  console.log('Current Sort By:', sortBy);
 
- const filteredProducts = category === 'Все'
+ const filteredProducts = category === 'all' || category === 'Все'
    ? items
    : items.filter((product) => product.category === category);
 

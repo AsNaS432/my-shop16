@@ -1,7 +1,3 @@
-import getpass
-import os
-
-from langchain_gigachat.chat_models import GigaChat
 from langchain_ollama import OllamaEmbeddings
 from langchain_ollama import OllamaLLM
 
@@ -24,29 +20,42 @@ def get_ollama_embeddings():
     )
 
 
-# модель GigaChat
-def get_giga_chat_llm():
-    # инициализация GigaChat
-    if "GIGACHAT_CREDENTIALS" not in os.environ:
-        os.environ["GIGACHAT_CREDENTIALS"] = getpass.getpass("Введите ключ авторизации GigaChat API: ")
-
-    giga_chat = GigaChat(verify_ssl_certs=False)
-    return giga_chat
-
-
-# дополнительно: Модель OpenChat, запускается через Ollama
-def get_ollama_llm():
+# модель Llama2 через Ollama
+def get_llama2_llm():
     ollama = OllamaLLM(
         base_url='http://localhost:11434',
-        model="deepseek-r1:8b"
+        model="llama2:7b-chat",
+        temperature=0.7,
+        options={
+            'num_ctx': 4096,
+            'system': "Отвечай только на русском языке. Все ответы должны быть на русском."
+        }
     )
     return ollama
 
 
 # создаём объекты моделей
 embeddings = get_ollama_embeddings()    # модель для векторизации
-llm = get_giga_chat_llm()               # генеративный ИИ
-# llm = get_ollama_llm()
+llm = get_llama2_llm()                  # генеративный ИИ
+
+@app.route('/api/ai/status', methods=['GET'])
+def api_status():
+    return jsonify({"status": "online"})
+
+@app.route('/api/ai/chat', methods=['POST'])
+def api_chat():
+    data = request.get_json()
+
+    if 'message' not in data:
+        return jsonify({"error": "No message provided"}), 400
+
+    question = data['message']
+    answer = search_data_chroma_db(llm, embeddings, question, "./market_chroma_db")
+    
+    return jsonify({
+        "reply": answer,
+        "model": "llama2:7b-chat"
+    })
 
 @app.route('/api/v1/create', methods=['POST'])
 def api_create():

@@ -149,7 +149,10 @@ app.post('/api/ai/chat', async (req, res) => {
 
     // Format messages in new chat format
     const messages = [
-      { role: 'system', content: 'You are a helpful assistant.' },
+      { 
+        role: 'system', 
+        content: 'Ты ассистент, который отвечает только на русском языке. Все ответы должны быть на русском.' 
+      },
       ...conversation.slice(-6).map(msg => ({
         role: msg.sender === 'user' ? 'user' : 'assistant',
         content: msg.text
@@ -161,10 +164,13 @@ app.post('/api/ai/chat', async (req, res) => {
     const response = await axios.post(
       `${process.env.OLLAMA_HOST || 'http://localhost:11434'}/api/chat`,
       {
-        model,
+        model: process.env.OLLAMA_MODEL || 'llama2',
         messages,
         stream: false,
-        options: { temperature: 0.7 }
+        options: { 
+          temperature: 0.7,
+          num_ctx: 2048
+        }
       },
       { 
         timeout: 15000,

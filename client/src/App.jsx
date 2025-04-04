@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Container, Typography, Grid, IconButton, useTheme, Button } from '@mui/material';
+import { Container, Typography, Grid, IconButton, useTheme, Button, Paper } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -9,6 +9,7 @@ import AuthPage from './pages/AuthPage';
 import LoginButton from './components/LoginButton';
 import AIChatPopup from './components/AIChatPopup';
 import { ThemeContext } from './context/ThemeContext';
+import ordersReducer from './features/ordersSlice';
 
 function App() {
   const theme = useTheme();
@@ -18,9 +19,28 @@ function App() {
   return (
     <Router>
       <Container>
-        <Typography variant="h3" component="h1" align="center" sx={{ my: 4 }}>
-          Интернет-магазин
-        </Typography>
+        <Paper elevation={6} sx={{ 
+          p: 3,
+          mb: 4,
+          textAlign: 'center',
+          background: theme.palette.mode === 'dark' 
+            ? 'linear-gradient(145deg, #1a237e, #283593)' 
+            : 'linear-gradient(145deg, #3f51b5, #5c6bc0)',
+          color: 'white',
+          borderRadius: 2,
+          boxShadow: theme.shadows[10]
+        }}>
+          <Typography variant="h2" component="h1" sx={{ 
+            fontWeight: 700,
+            letterSpacing: 1,
+            textTransform: 'uppercase'
+          }}>
+            MYtoolsShop
+          </Typography>
+          <Typography variant="subtitle1" sx={{ mt: 1, opacity: 0.9 }}>
+            Магазин качественных комплектующих
+          </Typography>
+        </Paper>
         <IconButton 
           onClick={toggleTheme} 
           sx={{ position: 'absolute', top: 16, right: 16 }}
