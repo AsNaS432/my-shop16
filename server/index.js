@@ -31,7 +31,6 @@ pool.on('error', (err) => {
   console.error('Unexpected database error:', err);
 });
 
-// Create users table if not exists
 async function initDB() {
   try {
     await pool.query(`
@@ -42,6 +41,32 @@ async function initDB() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    // Check if orders table exists and has the correct columns
+    const ordersTableCheck = await pool.query(`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'orders'
+    `);
+
+    const existingColumns = ordersTableCheck.rows.map(row => row.column_name);
+    
+    // Create orders table if it does not exist
+    if (!existingColumns.includes('products')) {
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS orders (
+          id SERIAL PRIMARY KEY,
+          user_id INT NOT NULL,
+          user_email VARCHAR(255) NOT NULL,
+          products JSONB NOT NULL,
+          phone_number VARCHAR(20) NOT NULL,
+          delivery_method VARCHAR(50) NOT NULL,
+          address TEXT NOT NULL,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+    }
+    
     console.log('Database initialized');
   } catch (err) {
     console.error('Database initialization error:', err);
@@ -196,6 +221,26 @@ app.post('/api/ai/chat', async (req, res) => {
       error: 'AI service error',
       details: error.response?.data || error.message 
     });
+  }
+});
+
+app.post('/api/orders', async (req, res) => {
+  try {
+    const { user_id, user_email, products, phone_number, delivery_method, address } = req.body;
+
+    if (!user_id || !user_email || !products || !phone_number || !delivery_method || !address) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const result = await pool.query(
+      'INSERT INTO orders (user_id, user_email, products, phone_number, delivery_method, address) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [user_id, user_email, JSON.stringify(products), phone_number, delivery_method, address]
+    );
+
+    res.status(201).json({ order: result.rows[0] });
+  } catch (err) {
+    console.error('Error creating order:', err);
+    res.status(500).json({ error: 'Failed to create order' });
   }
 });
 

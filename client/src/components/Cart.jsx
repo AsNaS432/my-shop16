@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart } from '../features/cartSlice';
-import OrderDialog from './OrderDialog';
+import OrderDialog from './OrderDialog'; 
 
 const Cart = () => {
   const cartItems = useSelector(state => state.cart.items);
