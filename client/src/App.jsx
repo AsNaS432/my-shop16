@@ -9,12 +9,11 @@ import AuthPage from './pages/AuthPage';
 import LoginButton from './components/LoginButton';
 import AIChatPopup from './components/AIChatPopup';
 import { ThemeContext } from './context/ThemeContext';
-import ordersReducer from './features/ordersSlice';
 
 function App() {
   const theme = useTheme();
   const { toggleTheme } = useContext(ThemeContext);
-  const [openAI, setOpenAI] = useState(false);
+  const [openAI, setOpenAI] = useState(false); // State for AI chat popup
 
   return (
     <Router>
@@ -47,7 +46,7 @@ function App() {
         >
           {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
-        <LoginButton />
+        <LoginButton /> {/* Removed profile button */}
         <Button 
           variant="contained" 
           onClick={() => setOpenAI(true)}
@@ -55,7 +54,7 @@ function App() {
         >
           AI Помощник
         </Button>
-        <AIChatPopup 
+        <AIChatPopup
           open={openAI} 
           onClose={() => setOpenAI(false)}
         />

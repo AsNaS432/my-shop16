@@ -12,7 +12,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: '*', // Allow all origins for testing
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
