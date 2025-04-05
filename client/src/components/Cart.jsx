@@ -44,7 +44,7 @@ const Cart = () => {
                   color="error"
                   onClick={() => dispatch(removeFromCart(item))}
                 >
-                  Удалить
+                  🗑️ {/* Red trash can emoji */}
                 </Button>
               </ListItem>
             ))}

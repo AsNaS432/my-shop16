@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductList from './components/ProductList';
 import Cart from './components/Cart';
 import AuthPage from './pages/AuthPage';
-import LoginButton from './components/LoginButton';
+import LoginButton from './components/LoginButton'; // Re-import LoginButton
 import AIChatPopup from './components/AIChatPopup';
 import { ThemeContext } from './context/ThemeContext';
 
@@ -46,7 +46,7 @@ function App() {
         >
           {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
-        <LoginButton /> {/* Removed profile button */}
+        <LoginButton /> {/* Re-add LoginButton */}
         <Button 
           variant="contained" 
           onClick={() => setOpenAI(true)}
