@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../features/cartSlice';
 
 const formatPrice = (price) => {
-  return price.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+  return price.toLocaleString('ru-RU') + ' ₽'; // Removed decimal formatting
 };
 
 const ProductCard = ({ product }) => {
