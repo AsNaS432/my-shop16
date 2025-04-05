@@ -11,12 +11,14 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart, removeFromCart } from '../features/cartSlice';
 import OrderDialog from './OrderDialog'; 
+import { useTheme } from '@mui/material/styles'; // Moved this import to the top
 
 const formatPrice = (price) => {
   return price.toLocaleString('ru-RU') + ' ₽'; // Removed decimal formatting
 };
 
 const Cart = () => {
+  const theme = useTheme(); // Get the current theme
   const cartItems = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
   const [openOrderDialog, setOpenOrderDialog] = useState(false);
@@ -24,7 +26,7 @@ const Cart = () => {
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <Paper elevation={3} sx={{ p: 4, borderRadius: 2, backgroundColor: '#f9f9f9', maxWidth: '900px', margin: 'auto' }}>
+    <Paper elevation={3} sx={{ p: 4, borderRadius: 2, backgroundColor: theme.palette.background.paper, maxWidth: '900px', margin: 'auto' }}>
       <Typography variant="h6" gutterBottom>
         Корзина
       </Typography>

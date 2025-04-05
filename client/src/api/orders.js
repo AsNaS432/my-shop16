@@ -29,6 +29,22 @@ const OrderService = {
         throw new Error('Missing required fields');
       }
 
+      console.log('Creating order with data:', {
+        user_id: orderData.user_id,
+        user_email: orderData.user_email,
+        products: orderData.products.map(p => ({
+          product_id: p.id,
+          quantity: p.quantity,
+          price: p.price,
+          name: p.name
+        })),
+        phone_number: orderData.phone_number,
+        delivery_method: orderData.delivery_method,
+        address: orderData.delivery_method === 'delivery' 
+          ? orderData.address 
+          : 'Pickup'
+      });
+
       const response = await apiClient.post('', {
         user_id: orderData.user_id,
         user_email: orderData.user_email,
