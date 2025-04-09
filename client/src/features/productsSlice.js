@@ -25,6 +25,9 @@ const productsSlice = createSlice({
    },
    setSortBy: (state, action) => {
      console.log('Current State before setSortBy:', state);
+     state.sortBy = action.payload === 'rating' ? 'default' : action.payload; // Remove rating sorting
+     console.log('Updated State after setSortBy:', state);
+     console.log('Current State before setSortBy:', state);
      state.sortBy = action.payload;
      console.log('Updated State after setSortBy:', state);
    },
