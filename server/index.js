@@ -244,6 +244,16 @@ app.post('/api/orders', async (req, res) => {
   }
 });
 
+app.get('/api/products', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM products');
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error fetching products:', err);
+        res.status(500).json({ error: 'Failed to fetch products' });
+    }
+});
+
 // Initialize DB and start server
 initDB().then(() => {
   const PORT = process.env.PORT || 5000;
