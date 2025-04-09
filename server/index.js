@@ -101,6 +101,8 @@ app.post('/auth/register', async (req, res) => {
 });
 
 app.post('/auth/login', async (req, res) => {
+console.log('Login attempt:', req.body);  // Log the login attempt
+console.error('Login error:', err); // Log any errors that occur during login
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -256,7 +258,7 @@ app.get('/api/products', async (req, res) => {
 
 // Initialize DB and start server
 initDB().then(() => {
-  const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log(`Ollama configured to: ${process.env.OLLAMA_HOST || 'http://localhost:11434'}`);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 // Updated base URL to point to the correct server endpoint
-const API_URL = 'http://localhost:5000/api/products'; // Changed from mock API to server API
+const API_URL = 'http://localhost:5001/api/products'; // Changed from mock API to server API
 
 // Function to load products
 export const fetchProducts = async () => {
